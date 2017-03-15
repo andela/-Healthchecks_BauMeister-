@@ -1,1 +1,2 @@
-./manage.py runserver
+web: gunicorn hc.wsgi --log-file -
+worker: python ./manage.py runserver
