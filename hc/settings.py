@@ -157,7 +157,7 @@ else:
     warnings.warn("local_settings.py not found, using defaults")
 
 # # Allow all host hosts/domain names for this site
-ALLOWED_HOSTS = ['healthchecks-baumeister.herokuapp.com']
+ALLOWED_HOSTS = ['healthchecks-bau.herokuapp.com']
 
 # Parse database configuration from $DATABASE_URL
 DATABASES = { 'default' : dj_database_url.config()}
