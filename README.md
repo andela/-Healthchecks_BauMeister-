@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/andela/-Healthchecks_BauMeister-.svg?branch=master)](https://travis-ci.org/andela/-Healthchecks_BauMeister-)
+
 # healthchecks
 
 ![Screenshot of Welcome page](/stuff/screenshots/welcome.png?raw=true "Welcome Page")
