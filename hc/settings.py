@@ -152,7 +152,7 @@ PUSHBULLET_CLIENT_ID = None
 PUSHBULLET_CLIENT_SECRET = None
 
 # # Allow all host hosts/domain names for this site
-ALLOWED_HOSTS = ['healthchecks-bau.herokuapp.com']
+ALLOWED_HOSTS = ['healthchecks-baumeister.herokuapp.com']
 
 # Parse database configuration from $DATABASE_URL
 DATABASE_URL = 'postgresql:///postgresql'
