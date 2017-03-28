@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import dj_database_url
+import django
 import os
 import warnings
 import sendgrid
@@ -79,6 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hc.wsgi.application'
 TEST_RUNNER = 'hc.api.tests.CustomRunner'
+
 
 # Default database engine is SQLite. So one can just check out code,
 # install requirements.txt and do manage.py runserver and it works
@@ -150,9 +152,10 @@ PUSHBULLET_CLIENT_ID = None
 PUSHBULLET_CLIENT_SECRET = None
 
 # # Allow all host hosts/domain names for this site
+#ALLOWED_HOSTS = ['healthchecks-bau.herokuapp.com']
 ALLOWED_HOSTS = ['healthchecks-bau.herokuapp.com']
 
-# Parse database configuration from $DATABASE_URL
+# # Parse database configuration from $DATABASE_URL
 DATABASE_URL = 'postgresql:///postgresql'
 DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
@@ -161,3 +164,35 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+
+CACHES = {
+    'default': {
+        'BACKEND' : 'calm_cache.backends.CalmCache',
+        'LOCATION': 'locmem-cache',
+        'KEY_FUNCTION': 'calm_cache.contrib.sha1_key_func',
+        'OPTIONS': {
+            'MINT_PERIOD': '10', # Allow stale results for this many seconds. Default: 0 (Off)
+            'GRACE_PERIOD': '300', # Serve stale value once during this period. Default: 0 (Off)
+            'JITTER': '10', # Upper bound on the random jitter in seconds. Default: 0 (Off)
+        },
+    },
+    'locmem-cache': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'foo',
+    },
+    'zipped-memcached': {
+        'BACKEND': 'calm_cache.backends.MemcachedCache',
+        'LOCATION': '127.0.0.1:8000',
+        'OPTIONS': {
+            'MIN_COMPRESS_LEN': 1024, # Compress values of this size or larger, bytes. Default: 0 (Disabled)
+        },
+    },
+    'zipped-bin-pylibmc': {
+        'BACKEND': 'calm_cache.backends.PyLibMCCache',
+        'LOCATION': '127.0.0.1:8000',
+        'OPTIONS': {
+            'MIN_COMPRESS_LEN': 1024, # Compress values of this size or larger, bytes. Default: 0 (Disabled)
+            'BINARY': True, # Enable binary protocol for this backend. Default: False (Disabled)
+        },
+    },
+}
