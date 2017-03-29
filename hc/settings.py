@@ -121,7 +121,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "https://healthchecks-bau.herokuapp.com"
+SITE_ROOT = "http://127.0.0.1:8000"
 
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
@@ -152,12 +152,12 @@ PUSHBULLET_CLIENT_SECRET = None
 # # Allow all host hosts/domain names for this site
 ALLOWED_HOSTS = ['healthchecks-bau.herokuapp.com']
 
-# Parse database configuration from $DATABASE_URL
-DATABASE_URL = 'postgresql:///postgresql'
-DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
+# # Parse database configuration from $DATABASE_URL
+# DATABASE_URL = 'postgresql:///postgresql'
+# DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
-SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+SENDGRID_API_KEY = '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'

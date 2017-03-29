@@ -2,7 +2,6 @@ import base64
 import os
 import uuid
 from datetime import timedelta
-
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
@@ -19,7 +18,7 @@ class Profile(models.Model):
     team_name = models.CharField(max_length=200, blank=True)
     team_access_allowed = models.BooleanField(default=False)
     next_report_date = models.DateTimeField(null=True, blank=True)
-    reports_allowed = models.BooleanField(default=True)
+    reports_allowed = models.CharField(max_length=1, default="0")
     ping_log_limit = models.IntegerField(default=100)
     token = models.CharField(max_length=128, blank=True)
     api_key = models.CharField(max_length=128, blank=True)
@@ -54,9 +53,21 @@ class Profile(models.Model):
         self.save()
 
     def send_report(self):
-        # reset next report date first:
+        report_period = ""
         now = timezone.now()
-        self.next_report_date = now + timedelta(days=30)
+
+        if self.reports_allowed == '1':
+            self.next_report_date = now + timedelta(days=1)
+            report_period = 'Daily'
+
+        elif self.reports_allowed == '2':
+            self.next_report_date = now + timedelta(days=7)
+            report_period = 'Weekly'
+
+        else:
+            self.reports_allowed == '3'
+            self.next_report_date = now + timedelta(days=30)
+            report_period = 'Monthly'
         self.save()
 
         token = signing.Signer().sign(uuid.uuid4())
@@ -66,7 +77,8 @@ class Profile(models.Model):
         ctx = {
             "checks": self.user.check_set.order_by("created"),
             "now": now,
-            "unsub_link": unsub_link
+            "unsub_link": unsub_link,
+            "report_period": report_period
         }
 
         emails.report(self.user.email, ctx)
