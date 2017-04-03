@@ -1,10 +1,12 @@
 $(function () {
+  
     var MINUTE = {name: "minute", nsecs: 60};
     var HOUR = {name: "hour", nsecs: MINUTE.nsecs * 60};
     var DAY = {name: "day", nsecs: HOUR.nsecs * 24};
     var WEEK = {name: "week", nsecs: DAY.nsecs * 7};
     var MONTH = {name: "month", nsecs: DAY.nsecs * 30};
     var UNITS = [MONTH, WEEK, DAY, HOUR, MINUTE];
+
     var secsToText = function(total) {
         var remainingSeconds = Math.floor(total);
         var result = "";
@@ -24,6 +26,7 @@ $(function () {
         }
         return result;
     }
+
     var periodSlider = document.getElementById("period-slider");
     noUiSlider.create(periodSlider, {
         start: [20],
@@ -45,11 +48,13 @@ $(function () {
             }
         }
     });
+
     periodSlider.noUiSlider.on("update", function(a, b, value) {
         var rounded = Math.round(value);
         $("#period-slider-value").text(secsToText(rounded));
         $("#update-timeout-timeout").val(rounded);
     });
+
     var graceSlider = document.getElementById("grace-slider");
     noUiSlider.create(graceSlider, {
         start: [20],
@@ -64,6 +69,7 @@ $(function () {
             '84%': [5184000, 5184000],
             'max': 7776000,
         },
+
         pips: {
             mode: 'values',
             values: [60, 3600, 43200, 86400, 604800, 2592000, 5184000, 7776000],
@@ -74,6 +80,7 @@ $(function () {
             }
         }
     });
+
     graceSlider.noUiSlider.on("update", function(a, b, value) {
         var rounded = Math.round(value);
         $("#grace-slider-value").text(secsToText(rounded));
@@ -89,6 +96,7 @@ $(function () {
         $("#update-name-input").focus();
         return false;
     });
+
     $(".timeout-grace").click(function() {
         var $this = $(this);
         $("#update-timeout-form").attr("action", $this.data("url"));
@@ -97,6 +105,7 @@ $(function () {
         $('#update-timeout-modal').modal({"show":true, "backdrop":"static"});
         return false;
     });
+
     $(".check-menu-remove").click(function() {
         var $this = $(this);
         $("#remove-check-form").attr("action", $this.data("url"));
@@ -104,6 +113,7 @@ $(function () {
         $('#remove-check-modal').modal("show");
         return false;
     });
+
     $("#my-checks-tags button").click(function() {
         // .active has not been updated yet by bootstrap code,
         // so cannot use it
@@ -119,6 +129,7 @@ $(function () {
             $("#checks-list > li").show();
             return;
         }
+
         function applyFilters(index, element) {
             var tags = $(".my-checks-name", element).data("tags").split(" ");
             for (var i=0, tag; tag=checked[i]; i++) {
@@ -129,16 +140,19 @@ $(function () {
             }
             $(element).show();
         }
+
         // Desktop: for each row, see if it needs to be shown or hidden
         $("#checks-table tr.checks-row").each(applyFilters);
         // Mobile: for each list item, see if it needs to be shown or hidden
         $("#checks-list > li").each(applyFilters);
     });
+
     $(".pause-check").click(function(e) {
         var url = e.target.getAttribute("data-url");
         $("#pause-form").attr("action", url).submit();
         return false;
     });
+
     $(".usage-examples").click(function(e) {
         var a = e.target;
         var url = a.getAttribute("data-url");
@@ -148,18 +162,22 @@ $(function () {
         $("#show-usage-modal").modal("show");
         return false;
     });
+
     var clipboard = new Clipboard('button.copy-link');
     $("button.copy-link").mouseout(function(e) {
         setTimeout(function() {
             e.target.textContent = "copy";
         }, 300);
     })
+
     clipboard.on('success', function(e) {
         e.trigger.textContent = "copied!";
         e.clearSelection();
     });
+
     clipboard.on('error', function(e) {
         var text = e.trigger.getAttribute("data-clipboard-text");
         prompt("Press Ctrl+C to select:", text)
     });
+
 });
