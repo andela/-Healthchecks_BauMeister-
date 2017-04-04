@@ -8,22 +8,19 @@ class NameTagsForm(forms.Form):
 
     def clean_tags(self):
         l = []
-
         for part in self.cleaned_data["tags"].split(" "):
             part = part.strip()
             if part != "":
                 l.append(part)
-
         return " ".join(l)
 
 
 class TimeoutForm(forms.Form):
     timeout = forms.IntegerField(min_value=60, max_value=2592000)
-    grace = forms.IntegerField(min_value=60, max_value=2592000)
+    grace = forms.IntegerField(min_value=60, max_value=7776000)
 
 
 class AddChannelForm(forms.ModelForm):
-
     class Meta:
         model = Channel
         fields = ['kind', 'value']
@@ -35,7 +32,6 @@ class AddChannelForm(forms.ModelForm):
 
 class AddWebhookForm(forms.Form):
     error_css_class = "has-error"
-
     value_down = forms.URLField(max_length=1000, required=False)
     value_up = forms.URLField(max_length=1000, required=False)
 

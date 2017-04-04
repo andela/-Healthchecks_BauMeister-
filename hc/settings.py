@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 import dj_database_url
+import django
 import os
 import warnings
 import sendgrid
@@ -79,6 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hc.wsgi.application'
 TEST_RUNNER = 'hc.api.tests.CustomRunner'
+
 
 # Default database engine is SQLite. So one can just check out code,
 # install requirements.txt and do manage.py runserver and it works
@@ -149,7 +151,7 @@ PUSHOVER_EMERGENCY_EXPIRATION = 86400
 PUSHBULLET_CLIENT_ID = None
 PUSHBULLET_CLIENT_SECRET = None
 
-# # Allow all host hosts/domain names for this site
+# Allow all host hosts/domain names for this site
 ALLOWED_HOSTS = ['healthchecks-bau.herokuapp.com']
 
 # Parse database configuration from $DATABASE_URL
