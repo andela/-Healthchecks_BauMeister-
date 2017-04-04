@@ -154,7 +154,7 @@ PUSHBULLET_CLIENT_SECRET = None
 # Allow all host hosts/domain names for this site
 ALLOWED_HOSTS = ['healthchecks-bau.herokuapp.com']
 
-# # Parse database configuration from $DATABASE_URL
+# Parse database configuration from $DATABASE_URL
 DATABASE_URL = 'postgresql:///postgresql'
 DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
