@@ -14,11 +14,16 @@ from hc.lib import emails
 
 class Profile(models.Model):
     # Owner:
+    PERIODIC_CHOICES = (
+        ('1', 'Daily'),
+        ('2', 'Weekly'),
+        ('3', 'Monthly'),
+    )
     user = models.OneToOneField(User, blank=True, null=True)
     team_name = models.CharField(max_length=200, blank=True)
     team_access_allowed = models.BooleanField(default=False)
     next_report_date = models.DateTimeField(null=True, blank=True)
-    reports_allowed = models.CharField(max_length=1, default="0")
+    reports_allowed = models.CharField(max_length=1, choices=PERIODIC_CHOICES)
     ping_log_limit = models.IntegerField(default=100)
     token = models.CharField(max_length=128, blank=True)
     api_key = models.CharField(max_length=128, blank=True)
