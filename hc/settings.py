@@ -151,8 +151,7 @@ PUSHOVER_EMERGENCY_EXPIRATION = 86400
 PUSHBULLET_CLIENT_ID = None
 PUSHBULLET_CLIENT_SECRET = None
 
-# # Allow all host hosts/domain names for this site
-#ALLOWED_HOSTS = ['healthchecks-bau.herokuapp.com']
+# Allow all host hosts/domain names for this site
 ALLOWED_HOSTS = ['healthchecks-bau.herokuapp.com']
 
 # # Parse database configuration from $DATABASE_URL
