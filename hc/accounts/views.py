@@ -19,7 +19,7 @@ from hc.api.models import Channel, Check
 from hc.lib.badges import get_badge_url
 
 PERIODIC_CHOICES = (
-    ('1', 'Dayly'),
+    ('1', 'Daily'),
     ('2', 'Weekly'),
     ('3', 'Monthly'),
 )
