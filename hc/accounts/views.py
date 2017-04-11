@@ -24,6 +24,12 @@ PERIODIC_CHOICES = (
     ('3', 'Monthly'),
 )
 
+NAG_CHOICES = (
+    ('1', '10 minutes'),
+    ('2', '30 minutes'),
+    ('3', '1 Hour'),
+)
+
 def _make_user(email):
     username = str(uuid.uuid4())[:30]
     user = User(username=username, email=email)
@@ -127,6 +133,13 @@ def check_token(request, username, token):
             auth_login(request, user)
 
             return redirect("hc-checks")
+
+        elif "update-nag-user" in request.POST:
+            form = ReportSettingsForm(request.POST)
+            if form.is_valid():
+                profile.nag_allowed = request.POST.get("nag_allowed", NAG_CHOICES)
+                profile.save()
+                messages.success(request, "Your settings have been updated!")
 
         request.session["bad_link"] = True
         return redirect("hc-login")
