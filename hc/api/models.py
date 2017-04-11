@@ -21,7 +21,7 @@ STATUSES = (
 )
 DEFAULT_TIMEOUT = td(days=1)
 DEFAULT_GRACE = td(hours=1)
-DEFAULT_NAG = td(hours=1)
+DEFAULT_NAG = td(minutes=1)
 CHANNEL_KINDS = (("email", "Email"), ("webhook", "Webhook"),
                  ("hipchat", "HipChat"),
                  ("slack", "Slack"), ("pd", "PagerDuty"), ("po", "Pushover"),
@@ -53,7 +53,7 @@ class Check(models.Model):
     last_ping = models.DateTimeField(null=True, blank=True)
     alert_after = models.DateTimeField(null=True, blank=True, editable=False)
     status = models.CharField(max_length=6, choices=STATUSES, default="new")
-    nag = models.DurationField(default=DEFAULT_NAG)
+    nag = models.DurationField(null=True)
     nag_after = models.DateTimeField(null=True, blank=True)
     last_nag_alert = models.DateTimeField(null=True, blank=True)
 
@@ -134,10 +134,10 @@ class Check(models.Model):
 
         return result
 
-        def update_nag(self):
-            now = timezone.now()
-            self.nag_after = now + self.nag
-            self.last_nag_alert = now
+    def update_nag(self):
+        now = timezone.now()
+        self.nag_after = now + self.nag
+        self.last_nag_alert = now
 
 class Ping(models.Model):
     n = models.IntegerField(null=True)
