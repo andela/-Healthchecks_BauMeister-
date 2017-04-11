@@ -32,8 +32,8 @@ class Profile(models.Model):
     next_report_date = models.DateTimeField(null=True, blank=True)
     reports_allowed = models.CharField(max_length=1, default=1, choices=PERIODIC_CHOICES)
     ping_log_limit = models.IntegerField(default=100)
-    token = models.CharField(max_length=128, blank=True)
-    api_key = models.CharField(max_length=128, blank=True)
+    token = models.CharField(max_length=200, blank=True)
+    api_key = models.CharField(max_length=200, blank=True)
     current_team = models.ForeignKey("self", null=True)
 
     def __str__(self):

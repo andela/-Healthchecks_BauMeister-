@@ -52,7 +52,7 @@ class Check(models.Model):
     n_pings = models.IntegerField(default=0)
     last_ping = models.DateTimeField(null=True, blank=True)
     alert_after = models.DateTimeField(null=True, blank=True, editable=False)
-    status = models.CharField(max_length=6, choices=STATUSES, default="new")
+    status = models.CharField(max_length=10, choices=STATUSES, default="new")
     nag = models.DurationField(null=True)
     nag_after = models.DateTimeField(null=True, blank=True)
     last_nag_alert = models.DateTimeField(null=True, blank=True)
