@@ -162,4 +162,5 @@ DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
+# SENDGRID_API_KEY = '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'
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
