@@ -104,6 +104,21 @@ def docs(request):
     return render(request, "front/docs.html", ctx)
 
 
+@login_required
+def reports(request):
+    checks = Check.objects.filter(user=request.team.user).order_by("created")
+    failed_checks = [check for check in checks
+                     if check.get_status() == "down" and check.n_pings]
+    ctx = {
+        "page": "reports",
+        "checks": failed_checks,
+        "now": timezone.now(),
+        "ping_endpoint": settings.PING_ENDPOINT
+    }
+
+    return render(request, "front/reports.html", ctx)
+
+
 def docs_api(request):
     ctx = {
         "page": "docs",
