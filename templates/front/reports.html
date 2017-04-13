@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load compress staticfiles %}
+
+{% block title %}Failed Jobs - healthchecks.io{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <h1>
+        {% if request.team == request.user.profile %}
+            Failed Jobs
+        {% else %}
+            {{ request.team.team_name }}
+        {% endif %}
+        </h1>
+    </div>
+
+
+</div>
+<div class="row">
+    <div class="col-sm-12">
+
+
+    {% if checks %}
+    <table id="failed-checks-table" class="table hidden-xs">
+        <tr>
+            <th>Status</th>
+            <th>Name</th>
+            <th>Ping URL</th>
+            <th>Last Ping</th>
+        </tr>
+        {% for check in checks %}
+        <tr>
+          <td>
+              <span class="label label-danger">DOWN</span>
+          </td>
+            <td>{{check.name}}</td>
+            <td>{{check.url}}</td>
+            <td>{{ check.last_ping }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <div class="alert alert-info"> You don't have failed checks yet.</div>
+    {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+{% compress js %}
+<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/nouislider.min.js' %}"></script>
+<script src="{% static 'js/clipboard.min.js' %}"></script>
+<script src="{% static 'js/checks.js' %}"></script>
+{% endcompress %}
+{% endblock %}
