@@ -107,10 +107,8 @@ def docs(request):
 @login_required
 def reports(request):
     checks = Check.objects.filter(user=request.team.user).order_by("created")
-    failed_checks = []
-    for check in checks:
-        if check.get_status() == "down" and check.n_pings:
-            failed_checks.append(check)
+    failed_checks = [check for check in checks
+                     if check.get_status() == "down" and check.n_pings]
     ctx = {
         "page": "reports",
         "checks": failed_checks,
